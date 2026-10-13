@@ -1,1 +1,6 @@
-<p>notes works!</p>
+@for (note of notes(); track note?.title) {
+    <div class="note">
+      <h2>{{note?.title}}</h2>
+      <p>{{note?.content}}</p>
+    </div>
+}
