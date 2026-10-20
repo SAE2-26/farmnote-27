@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal } from '@angular/core';
+import { Component, inject, input } from '@angular/core';
 import { DefaultService } from '../../../api';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { Note } from '../../components/note/note';
@@ -14,4 +14,5 @@ export class Notes {
 
   notes = toSignal(this.defaultService.readNotesNotesGet());
 
+  notesId = input(0, {alias: "id"});
 }

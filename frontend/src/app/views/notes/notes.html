@@ -1,3 +1,5 @@
 @for (note of notes(); track note?.title) {
     <app-note [title]="note?.title" [content]="note?.content"></app-note>
 }
+
+Current selected id: {{ notesId() }}
