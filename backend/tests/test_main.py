@@ -1,4 +1,4 @@
-from random import choice
+from random import choice, sample
 
 import pytest
 from fastapi.testclient import TestClient
@@ -37,8 +37,7 @@ def generate_random_token():
     token = "M"
     token += str(choice("0123456789"))
     token += str(choice("abcdefghijklmnopqrstuvwxyz"))
-    for _ in range(3):
-        token += choice(special_characters)
+    token += "".join(sample(special_characters, 3))
     return token
 
 def test_returns_string():
