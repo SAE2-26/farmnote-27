@@ -1,8 +1,8 @@
 from random import choice
 
+import pytest
 from fastapi.testclient import TestClient
 from pytest import MonkeyPatch
-import pytest
 
 
 def test_get_notes(client: TestClient):
