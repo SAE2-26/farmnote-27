@@ -14,5 +14,5 @@ export class Notes {
 
   notes = toSignal(this.defaultService.readNotesNotesGet());
 
-  notesId = input(0, {alias: "id"});
+  id = input(0);
 }
