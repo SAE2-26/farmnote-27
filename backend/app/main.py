@@ -1,39 +1,19 @@
-from datetime import datetime
-
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from pydantic import BaseModel
+
+from app.config import CORS_ORIGINS
+from app.routers.health import router as health_router
+from app.routers.notes import router as notes_router
 
 app = FastAPI()
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=CORS_ORIGINS,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-
-class Note(BaseModel):
-    title: str
-    content: str
-    date: datetime | None = None
-
-
-@app.get("/health")
-def health() -> dict[str, str]:
-    return {"status": "ok"}
-
-
-@app.get("/notes")
-def read_notes() -> list[Note]:
-    return [
-        Note(title="Note 1", content="This is the first note.", date=datetime.now()),
-        Note(title="Note 2", content="This is the second note.", date=datetime.now()),
-    ]
-
-
-@app.post("/notes")
-def create_note(note: Note) -> Note:
-    return note
+app.include_router(health_router)
+app.include_router(notes_router)
