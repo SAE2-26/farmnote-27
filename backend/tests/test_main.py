@@ -5,6 +5,12 @@ from fastapi.testclient import TestClient
 from pytest import MonkeyPatch
 
 
+def test_health(client: TestClient):
+    response = client.get("/health")
+    assert response.status_code == 200
+    assert response.json() == {"status": "ok"}
+
+
 def test_get_notes(client: TestClient):
     notes_response = client.get("/notes")
     assert notes_response.status_code == 200

@@ -21,6 +21,11 @@ class Note(BaseModel):
     date: datetime | None = None
 
 
+@app.get("/health")
+def health() -> dict[str, str]:
+    return {"status": "ok"}
+
+
 @app.get("/notes")
 def read_notes() -> list[Note]:
     return [
