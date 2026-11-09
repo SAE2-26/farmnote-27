@@ -13,6 +13,7 @@ dependencies = [
     "pytest>=9.1.1",
     "pytest-cov>=7.1.0",
     "ruff>=0.17.1",
+    "sqlmodel>=0.0.48",
 ]
 
 [project.scripts]

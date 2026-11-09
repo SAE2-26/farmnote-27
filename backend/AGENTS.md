@@ -6,7 +6,7 @@ ruff: Run linter, prettifier and checks
 ```
 
 # Project Structure
-````
+```
 .
 ├── app
 │   ├── __init__.py
@@ -32,3 +32,8 @@ ruff: Run linter, prettifier and checks
 
 # Rules
 * Before you commit, run `pytest`, `ruff check`, and `ruff format --check`.
+* For tests, mirror the file structure of the `app` folder.
+
+# Tech-Stack
+* sqlmodel: ORM library
+* sqlite: db in the local filesystem

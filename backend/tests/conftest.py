@@ -1,10 +1,28 @@
 import pytest
+from fastapi.testclient import TestClient
+from sqlalchemy.pool import StaticPool
+from sqlmodel import Session, SQLModel, create_engine
+
+from app.database import get_session
+from app.main import app
 
 
 @pytest.fixture
-def client():
-    from fastapi.testclient import TestClient
+def client(monkeypatch: pytest.MonkeyPatch):
+    engine = create_engine(
+        "sqlite://", connect_args={"check_same_thread": False}, poolclass=StaticPool
+    )
+    SQLModel.metadata.create_all(engine)
+    monkeypatch.setattr("app.main.create_db_and_tables", lambda: None)
 
-    from app.main import app
+    def get_test_session():
+        with Session(engine) as session:
+            yield session
 
-    return TestClient(app)
+    app.dependency_overrides[get_session] = get_test_session
+    try:
+        with TestClient(app) as test_client:
+            yield test_client
+    finally:
+        app.dependency_overrides.pop(get_session, None)
+        engine.dispose()
